@@ -5,14 +5,14 @@
   user-select: none;
 }
 
-.login-page {
-  // background: url('../images/login-pic.jpeg');
+#login-page {
+  background: url('../images/login-pic.jpg');
   height: 100vh;
   background-size: cover;
   background-position: center;
 }
 
-.login-page:after {
+#login-page:after {
   position: absolute;
   content: "";
   top: 0;

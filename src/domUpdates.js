@@ -1,21 +1,36 @@
+// import moment from 'moment';
 import $ from 'jquery';
-import moment from 'moment';
-import Users from './Users';
+// import Users from './Users';
+// import Manager from './Manager';
+// import Customer from './Customer';
+// import Rooms from './Rooms';
+// import Bookings from './Bookings';
+import LoginHandler from './LoginHandler';
 
+let user, rooms, bookings, today;
 
-let bookings, rooms, user;
+const domUpdates = {
+  loadSite: (loginInfo) => {
+    user = loginInfo.userData;
+    console.log('user', user);
+    // today = roomRepo.getRandomDate();
 
-function login(username, pass) {
-  const login = new LoginManager(username, pass, function() {
-    user = login.userData;
-    if (login.id === "manager") {
+    // $("<h3/>", {
+    //   id: "date",
+    //   text: today
+    // }).appendTo("header");
+
+    if (loginInfo.id === "manager") {
       loadManagerPage();
     } else {
       loadUserPage();
     }
     hideLoginPage();
-  });
-}
+  },
 
+  hideLoginPage: () => {
+    $("#login-page").slideUp(1000);
+  }
+}
 
 export default domUpdates;

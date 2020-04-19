@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Webpack Starter Kit</title>
+    <meta charset="UTF-8">
+    <title>Overlook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
-
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+    <main class="login-page">
+      <section class="login-form">
+        <header> Welcome To Die Fetch</header>
+        <h2>Login Form</h2>
+        <form class="login-info" action="#" method="post">
+          <div class="field">
+            <span class="fa fa-user"></span>
+            <input type="text" required placeholder="Username">
+          </div>
+          <div class="field space">
+            <span class="fa fa-lock"></span>
+            <input type="password" class="pass-key" required placeholder="Password">
+            <!-- <span class="show">SHOW</span> -->
+          </div>
+          <div class="submit-button field">
+            <input type="submit" value="LOGIN">
+          </div>
+        </form>
+      </section>
+    </main>
 
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </body>
 </html>

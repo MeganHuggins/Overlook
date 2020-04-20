@@ -1,16 +1,16 @@
 class User {
-  constructor(id, name) {
-    this.id = id;
-    this.name = name;
+  constructor(userInfo) {
+    this.id = userInfo.id;
+    this.name = userInfo.name;
   }
+
+  // createUser(loginInfo) {
+  //   console.log(this);
+  // }
 
   findUserBookings() {
 
   }
-
-  // findPastBookings() {
-  //
-  // }
 
   findTotalSpentOnRooms() {
 

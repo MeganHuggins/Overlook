@@ -12,28 +12,31 @@ let hotel = new Hotel();
 
 
 const domUpdates = {
-  loadSite: (loginInfo, mockBookingData) => {
+  loadSite: (loginInfo, mockBookingData, mockRoomData, mockUserData) => {
     user = loginInfo.userData;
-    todaysDate = Number(Moment().format('YYYY/MM/DD').split('/').join(''));
-
+    console.log('user', user);
+    todaysDate = Moment().format('YYYY/MM/DD');
+    console.log('today', todaysDate);
 
     if (loginInfo.id === "manager") {
-      domUpdates.loadManagerPortal();
+      domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData);
     } else {
       domUpdates.loadCustomerPortal();
     }
     domUpdates.hideLoginPage();
   },
 
-  loadManagerPortal: () => {
-    let aviableRooms = hotel.findAviableRooms();
-    let totalRevenue = hotel.totalRevenueForToday();
-    let percentageOccupied = hotel.percentageOfRoomsOccupied();
+  loadManagerPortal: (todaysDate, mockBookingData, mockRoomData) => {
+    hotel.sortHotelData(mockBookingData, mockRoomData);
+    let aviableRooms = hotel.findAviableRooms(todaysDate);
+    let totalRevenue = hotel.totalRevenueForToday(todaysDate);
+    let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
   },
 
   loadCustomerPortal: () => {
-    let userBookings = user.findUserBookings();
-    let totalBookingCosts = user.findTotalSpentOnRooms();
+    let newUser = new User(user)
+    let userBookings = newUser.findUserBookings();
+    let totalBookingCosts = newUser.findTotalSpentOnRooms();
   },
 
   hideLoginPage: () => {

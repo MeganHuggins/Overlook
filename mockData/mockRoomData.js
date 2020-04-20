@@ -182,6 +182,22 @@ const mockRoomData = [
     "bedSize": "queen",
     "numBeds": 2,
     "costPerNight": 176.36
+  },
+  {
+    "number": 24,
+    "roomType": "suite",
+    "bidet": false,
+    "bedSize": "queen",
+    "numBeds": 1,
+    "costPerNight": 327.24
+  },
+  {
+    "number": 25,
+    "roomType": "single room",
+    "bidet": true,
+    "bedSize": "queen",
+    "numBeds": 1,
+    "costPerNight": 305.85
   }
 ];
 

@@ -21,7 +21,7 @@ const domUpdates = {
     if (loginInfo.id === "manager") {
       domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData);
     } else {
-      domUpdates.loadCustomerPortal();
+      domUpdates.loadCustomerPortal(todaysDate, mockBookingData, mockRoomData);
     }
     domUpdates.hideLoginPage();
   },
@@ -38,10 +38,39 @@ const domUpdates = {
 
   },
 
-  loadCustomerPortal: () => {
-    let newUser = new User(user)
-    let userBookings = newUser.findUserBookings();
-    let totalBookingCosts = newUser.findTotalSpentOnRooms();
+  loadCustomerPortal: (todaysDate, mockBookingData, mockRoomData) => {
+    let newUser = new User(user);
+    let currentBookings = newUser.findUserCurrentBookings(todaysDate, mockBookingData);
+    let pastBookings = newUser.findPastBookings(todaysDate, mockBookingData);
+    let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, mockBookingData, mockRoomData);
+    console.log('currentBookings', currentBookings);
+
+    $('#upcoming-bookings').html(
+    `<h2>Upcoming Bookings</h2>
+      <table class="booking-table">
+        ${currentBookings.length ? currentBookings.map(booking =>
+          `<tr>
+            <td>${booking.date}</td>
+            <td>Room ${booking.roomNumber}</td>
+          </tr>`).join("")
+          :
+          `<p>You currently have no upcoming bookings. Use the calendar to the right to start planning your next stay. </p>`
+        }
+      </table>`
+    );
+
+    $('#past-bookings').html(
+    `<h2>Past Bookings</h2>
+      <table class="booking-table">
+      ${pastBookings.map(booking =>
+      `<tr>
+        <td>${booking.date}</td>
+        <td>Room ${booking.roomNumber}</td>
+        </tr>`).join("")
+      }</table>`
+    );
+
+    $('#money-spent').prepend(`$${totalBookingCosts}`);
   },
 
   hideLoginPage: () => {

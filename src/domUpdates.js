@@ -31,6 +31,11 @@ const domUpdates = {
     let aviableRooms = hotel.findAviableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
     let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
+
+    $('#available').prepend(`There are ${aviableRooms} room${aviableRooms > 1 ? "s" : ""} still available.`);
+    $('#occupied').prepend(`${percentageOccupied} percent of the rooms are occupied`)
+    $('#revenue').prepend(`$${totalRevenue}`)
+
   },
 
   loadCustomerPortal: () => {

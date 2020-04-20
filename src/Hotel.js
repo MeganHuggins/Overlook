@@ -7,7 +7,7 @@ class Hotel {
   sortHotelData(mockBookingData, mockRoomData) {
     this.rooms = mockRoomData;
     this.bookings = mockBookingData
-    console.log('this.rooms', this.rooms, 'this.bookings', this.bookings);
+    // console.log('this.rooms', this.rooms, 'this.bookings', this.bookings);
   }
 
   findTodaysBookings(todaysDate) {
@@ -21,9 +21,18 @@ class Hotel {
   }
 
   findAviableRooms(todaysDate) {
-    let availableRooms = [];
     let bookedRooms = this.findTodaysBookings(todaysDate);
+    return this.rooms.length - bookedRooms.length
 
+    //
+    // for (let i = 0; i < this.rooms.length; i++) {
+    //   for (let j = 0; j < bookedRooms.length; i++ ) {
+    //     console.log('room', i, 'booked', j);
+    //     if(!availableRooms.includes(i) && j.roomNumber !== i.number) {
+    //       availableRooms.push(i);
+    //     }
+    //   }
+    // }
     // bookedRooms.filter(bookedRoom => {
     //   this.rooms.forEach(room => {
     //     if(room.number !== bookedRoom.roomNumber) {
@@ -34,15 +43,14 @@ class Hotel {
     //   })
     // })
 
-    this.rooms.forEach(room => {
-      bookedRooms.forEach(bookedRoom => {
-        if(!availableRooms.includes(room) && bookedRoom.roomNumber !== room.number) {
-          availableRooms.push(room)
-        }
-      })
-    });
-    console.log('availableRooms', availableRooms);
-    return availableRooms;
+    // this.rooms.forEach(room => {
+    //   bookedRooms.forEach(bookedRoom => {
+    //     if(!availableRooms.includes(room) && bookedRoom.roomNumber !== room.number) {
+    //       availableRooms.push(room)
+    //     }
+    //   })
+    // });
+    // return availableRooms;
   }
 
   totalRevenueForToday(todaysDate) {
@@ -66,11 +74,9 @@ class Hotel {
 
   percentageOfRoomsOccupied(todaysDate) {
     let bookedRooms = this.findTodaysBookings(todaysDate);
-    console.log('booked', bookedRooms);
     let availableRooms = this.findAviableRooms(todaysDate);
-    console.log('available', availableRooms);
 
-    return availableRooms.length / bookedRooms.length
+    return availableRooms / bookedRooms.length;
   }
 
 }

@@ -24,9 +24,6 @@ class LoginHandler {
 
 }
 
-    //   getId() {
-    //     return this.id;
-    //   }
 
 
 export default LoginHandler;

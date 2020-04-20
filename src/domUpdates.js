@@ -1,35 +1,43 @@
-// import moment from 'moment';
+const Moment = require('moment')
 import $ from 'jquery';
-// import Users from './Users';
+import User from './Users';
 // import Manager from './Manager';
 // import Customer from './Customer';
-// import Rooms from './Rooms';
-// import Bookings from './Bookings';
+// import Room from './Room';
+import Hotel from './Hotel';
 import LoginHandler from './LoginHandler';
 
-let user, rooms, bookings, today;
+let user, rooms, todaysDate;
+let hotel = new Hotel();
+
 
 const domUpdates = {
-  loadSite: (loginInfo) => {
+  loadSite: (loginInfo, mockBookingData) => {
     user = loginInfo.userData;
-    console.log('user', user);
-    // today = roomRepo.getRandomDate();
+    todaysDate = Number(Moment().format('YYYY/MM/DD').split('/').join(''));
 
-    // $("<h3/>", {
-    //   id: "date",
-    //   text: today
-    // }).appendTo("header");
 
     if (loginInfo.id === "manager") {
-      loadManagerPage();
+      domUpdates.loadManagerPortal();
     } else {
-      loadUserPage();
+      domUpdates.loadCustomerPortal();
     }
-    hideLoginPage();
+    domUpdates.hideLoginPage();
+  },
+
+  loadManagerPortal: () => {
+    let aviableRooms = hotel.findAviableRooms();
+    let totalRevenue = hotel.totalRevenueForToday();
+    let percentageOccupied = hotel.percentageOfRoomsOccupied();
+  },
+
+  loadCustomerPortal: () => {
+    let userBookings = user.findUserBookings();
+    let totalBookingCosts = user.findTotalSpentOnRooms();
   },
 
   hideLoginPage: () => {
-    $("#login-page").slideUp(1000);
+    $("#login-page").hide();
   }
 }
 

@@ -1,4 +1,4 @@
-class Rooms {
+class Room {
   constructor(roomNumber, roomType, bedSize, numBeds, costPerNight) {
     this.roomNumber = roomNumber;
     this.roomType = roomType;
@@ -9,8 +9,8 @@ class Rooms {
   },
 
   filterRoomByType() {
-    
+
   }
 }
 
-export default Rooms;
+export default Room;

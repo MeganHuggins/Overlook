@@ -1,6 +1,11 @@
 class Hotel {
   constructor() {
+    this.rooms = [];
+    this.bookings = []
+  }
 
+  getHotelData() {
+    
   }
 
   findTodaysBookings() {
@@ -18,7 +23,11 @@ class Hotel {
   percentageOfRoomsOccupied() {
 
   }
-  
+
+  filterRoomByType() {
+
+  }
+
 }
 
 export default Hotel;

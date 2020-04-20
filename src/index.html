@@ -6,8 +6,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   </head>
   <body>
-    <main id="login-page" src="">
-      <section class="login-form">
+    <main id="login-page hide" src="">
+      <section class="login-form hide">
         <header> Welcome To Die Fetch</header>
         <h2>Login Form</h2>
         <form class="login-info" action="#" method="">
@@ -25,6 +25,47 @@
           </div>
         </form>
       </section>
+    </main>
+
+    <main id="manager-portal">
+      <aside>
+        <section id="rooms-available" class="overview-card">
+          <h2 class="header">Rooms Available</h2>
+          <p></p>
+        </section>
+        <section id="rooms-occupied" class="overview-card">
+          <h2 class="card-header">Rooms Occupied</h2>
+          <p></p>
+        </section>
+        <section id="toadys-revenue" class="overview-card">
+          <h2 class="card-header">Today's Revenue</h2>
+          <p></p>
+        </section>
+      </aside>
+
+      <section id="main-portal">
+        <header>Manager Portal</header>
+        <section class="manager-user-section">
+          <div class="search-bar">
+            <button class="search-btn" type="button" name="button">
+              <img src="../images/search-icon.png">
+            </button>
+            <input class="search-input" type="text" name="" value="GUEST SEARCH">
+          </div>
+          <section class="guest-section">
+            <div class="guest-card">
+              <h3></h3>
+              <div class="guest-bookings">
+                
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <main id="customer-portal">
+
     </main>
 
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->

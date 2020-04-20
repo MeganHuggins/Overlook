@@ -5,8 +5,6 @@ class Bookings {
     this.bookingDate = bookingDate;
     this.roomNumber = roomNumber
   },
-
-
 }
 
 export default Bookings;

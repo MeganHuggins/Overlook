@@ -76,7 +76,7 @@ class Hotel {
     let bookedRooms = this.findTodaysBookings(todaysDate);
     let availableRooms = this.findAviableRooms(todaysDate);
 
-    return availableRooms / bookedRooms.length;
+    return Math.round(availableRooms / bookedRooms.length);
   }
 
 }

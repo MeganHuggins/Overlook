@@ -39,7 +39,6 @@ const domUpdates = {
   loadManagerPortal: (loginInfo, userData, roomData, bookingData) => {
     $('#customer-portal').hide();
     hotel.sortHotelData(roomData, bookingData);
-    // let customers = userData;
     let aviableRooms = hotel.findAviableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
     let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
@@ -152,16 +151,7 @@ const domUpdates = {
   },
 
   filterRoomByType: (roomType) => {
-    let roomCards = Array.from(document.querySelectorAll('.room-card'));
-
-    roomCards.forEach(card => {
-      const cardType = card.dataset.roomType;
-      if(roomType !== cardType) {
-        card.classList.add('hide')
-      } else {
-        card.classList.remove('hide')
-      }
-    })
+    $(".room-card").hide().filter(`[data-room-type="${roomType}"]`).show();
   },
 
 }

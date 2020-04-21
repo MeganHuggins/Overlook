@@ -7,27 +7,27 @@ import Room from './Room';
 import Hotel from './Hotel';
 import LoginHandler from './LoginHandler';
 
-let user, rooms, todaysDate;
+let user, todaysDate;
 let hotel = new Hotel();
 
 
 const domUpdates = {
-  loadSite: (loginInfo, mockBookingData, mockRoomData, mockUserData) => {
+  loadSite: (loginInfo, userData, roomData, bookingData) => {
     user = loginInfo.userData;
     todaysDate = Moment().format('YYYY/MM/DD');
 
     if (loginInfo.id === "manager") {
-      domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData, mockUserData);
+      domUpdates.loadManagerPortal(loginInfo, userData, roomData, bookingData);
     } else {
-      domUpdates.loadCustomerPortal(todaysDate, mockBookingData, mockRoomData);
+      domUpdates.loadCustomerPortal(todaysDate, roomData, bookingData);
     }
     domUpdates.hideLoginPage();
   },
 
-  loadManagerPortal: (todaysDate, mockBookingData, mockRoomData, mockUserData) => {
+  loadManagerPortal: (loginInfo, userData, roomData, bookingData) => {
     $('#customer-portal').hide();
     let customers = mockUserData;
-    hotel.sortHotelData(mockBookingData, mockRoomData);
+    hotel.sortHotelData(roomData, bookingData);
     let aviableRooms = hotel.findAviableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
     let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
@@ -51,12 +51,12 @@ const domUpdates = {
 
   },
 
-  loadCustomerPortal: (todaysDate, mockBookingData, mockRoomData) => {
-    rooms = mockRoomData;
+  loadCustomerPortal: (todaysDate, roomData, bookingData) => {
+    let rooms = roomData;
     let newUser = new User(user);
-    let currentBookings = newUser.findUserCurrentBookings(todaysDate, mockBookingData);
-    let pastBookings = newUser.findPastBookings(todaysDate, mockBookingData);
-    let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, mockBookingData, mockRoomData);
+    let currentBookings = newUser.findUserCurrentBookings(todaysDate, bookingData);
+    let pastBookings = newUser.findPastBookings(todaysDate, bookingData);
+    let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, roomData, bookingData);
 
 
     $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay`);

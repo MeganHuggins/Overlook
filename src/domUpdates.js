@@ -43,11 +43,16 @@ const domUpdates = {
     let currentBookings = newUser.findUserCurrentBookings(todaysDate, mockBookingData);
     let pastBookings = newUser.findPastBookings(todaysDate, mockBookingData);
     let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, mockBookingData, mockRoomData);
-    console.log('currentBookings', currentBookings);
+
+    $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay.`);
+
+    $('.filter-room-buttons').prepend(
+      `<img src="../images/calendar.png" alt="calendar">
+      <input min="${todaysDate.replace(/\//g, '-')}" required type="date" id="date-picker">`);
 
     $('#upcoming-bookings').html(
     `<h2>Upcoming Bookings</h2>
-      <table class="booking-table">
+      <table class="booking-list">
         ${currentBookings.length ? currentBookings.map(booking =>
           `<tr>
             <td>${booking.date}</td>
@@ -61,7 +66,7 @@ const domUpdates = {
 
     $('#past-bookings').html(
     `<h2>Past Bookings</h2>
-      <table class="booking-table">
+      <table class="booking-list">
       ${pastBookings.map(booking =>
       `<tr>
         <td>${booking.date}</td>

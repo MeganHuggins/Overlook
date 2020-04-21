@@ -22,22 +22,16 @@ class Hotel {
 
   findAviableRooms(todaysDate) {
     let bookedRooms = this.findTodaysBookings(todaysDate);
-    console.log('bookedRooms', bookedRooms);
     let availableRooms = [];
 
-    this.rooms.forEach(room => {
-      bookedRooms.forEach(booked => {
-        console.log(booked);
-        if(booked.roomNumber !== room.number) {
+    this.rooms.forEach((room) => {
+      bookedRooms.forEach((booked) => {
+        if (room.number !== booked.roomNumber) {
           availableRooms.push(room);
         }
-      })
+      });
     });
-
-    const available = new Set(availableRooms);
-
-    // 16 should come back
-    console.log('available', available);
+    return Array.from(new Set(availableRooms));
   }
 
   totalRevenueForToday(todaysDate) {
@@ -63,7 +57,7 @@ class Hotel {
     let bookedRooms = this.findTodaysBookings(todaysDate);
     let availableRooms = this.findAviableRooms(todaysDate);
 
-    return Math.round(availableRooms / bookedRooms.length);
+    return Math.round(bookedRooms.length / availableRooms.length);
   }
 
 }

@@ -18,6 +18,12 @@ const mockBookingData = require('../mockData/mockBookingData');
 
 console.log('mockUserData', mockUserData, 'mockRoomData', mockRoomData, 'mockBookingData', mockBookingData);
 
+// window.onload = function() {
+//   $('#manager-portal').hide();
+//   $('#customer-portal').hide();
+//   $('#login-page').show();
+// };
+
 $(".submit-btn").click(() => {
   getUserInfo(
     $(".username").val(),
@@ -36,7 +42,7 @@ function getUserInfo(username, password) {
     console.log('loginInfo2', loginInfo);
     domUpdates.loadSite(loginInfo, mockBookingData, mockRoomData, mockUserData)
   }
-}
+};
 
 // const bookingData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
 //   .then(response => response.json())

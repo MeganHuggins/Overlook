@@ -14,9 +14,7 @@ let hotel = new Hotel();
 const domUpdates = {
   loadSite: (loginInfo, mockBookingData, mockRoomData, mockUserData) => {
     user = loginInfo.userData;
-    console.log('user', user);
     todaysDate = Moment().format('YYYY/MM/DD');
-    console.log('today', todaysDate);
 
     if (loginInfo.id === "manager") {
       domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData);
@@ -94,11 +92,19 @@ const domUpdates = {
     );
 
     $('#money-spent').prepend(`$${totalBookingCosts}`);
+
+    $('#date-picker').change(function(){
+      const date = $('#date-picker').val().replace(/-/g, '/');
+      hotel.findAviableRooms(date);
+    });
+
   },
 
+
   hideLoginPage: () => {
-    $("#login-page").hide();
-  }
+    $('#login-page').hide();
+  },
+
 }
 
 export default domUpdates;

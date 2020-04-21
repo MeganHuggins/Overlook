@@ -116,8 +116,8 @@
   background-color: rgba(196,196,196,.6);
   padding: 5%;
   margin: 5%;
-  // opacity: 0.6;
-  height: 25%
+  height: 25%;
+  overflow: scroll;
 }
 
 .overview-card:hover {
@@ -129,7 +129,7 @@
 }
 
 .overview-card p {
-
+  padding-top: 2%;
 }
 
 #main-portal {
@@ -150,9 +150,9 @@
 
 #main-portal header h1 {
   margin-left: 2%;
-  font-size: 45px;
+  font-size: 40px;
   position: relative;
-  top: 20%;
+  top: 30%;
 }
 
 .manager-user-section {
@@ -213,6 +213,12 @@
   text-align: center;
 }
 
+.booking-list {
+  position: relative;
+  left: 30%;
+  padding-top: 3%;
+}
+
 .book-room-section {
   display: flex;
   flex-direction: row;
@@ -220,25 +226,100 @@
 }
 
 .filter-room-buttons {
-  display: flex;
-  flex-direction: column;
   width: 20%
 }
 
+.filter-room-buttons img {
+  width: 50%;
+  margin: 9% 40% 0%;
+}
+
+.presidential-suite-btn {
+  background: url("../images/presidential-suite.jpg")
+}
+
+.suite-btn {
+  background: url("../images/suite.jpg");
+}
+
+.junior-suite-btn {
+  background: url("../images/junior-suite.jpg")
+}
+
+
+.single-room-btn {
+  background: url("../images/single-room.jpg")
+}
+
+
+#date-picker {
+  margin: 10% 35% 15%;
+  border: black 1px solid;
+}
+
 .room-buttons {
-  background-color: #C4C4C4;
   border-radius: 50%;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   font-size: 22px;
   height: 110px;
-  margin: 0% 3%;
+  margin: 5% 35%;
   width: 110px;
+  background-position: center;
+  background-size: cover;
 }
 
-.rooms-section {
+.room-buttons:hover {
+  background: rgba(196, 196, 196, 0.6);
+}
+
+#rooms-section {
   width: 80%;
-
+  margin: 3% 3% 3% 5%;
+  background: rgba(196, 196, 196, 0.6);
+  overflow: scroll;
+  display: flex;
+  flex-wrap: wrap;
 }
+
+.room-card {
+  width: 40%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid red;
+  margin: 2% 5%;
+  background-color: rgba(121, 5, 5, 0.65);
+  justify-content: space-around;
+
+  h3 {
+    text-align: center;
+    font-size: 25px;
+    text-transform: capitalize;
+  }
+
+  .room-info {
+    background-color: rgba(196, 196, 196, 0.6);
+    height: 75%;
+    margin: 0% 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+
+    p {
+      font-size: 20px;
+    }
+  }
+
+  button {
+    height: 8%;
+    font-size: 18px;
+    margin: 2% 4%;
+    background: rgba(196, 196, 196, 0.6);
+  }
+}
+
+
 
 
 .hide {

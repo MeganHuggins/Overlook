@@ -3,9 +3,14 @@ import './css/base.scss';
 import domUpdates from './domUpdates';
 import LoginHandler from './LoginHandler'
 import './images/login-pic.jpg';
-import './images/staircase.jpg'
-import './images/search-icon.png'
-import './images/hotel-logo.png'
+import './images/staircase.jpg';
+import './images/search-icon.png';
+import './images/hotel-logo.png';
+import './images/calendar.png';
+import './images/single-room.jpg';
+import './images/junior-suite.jpg';
+import './images/suite.jpg';
+import './images/presidential-suite.jpg';
 
 const mockUserData = require('../mockData/mockUserData');
 const mockRoomData = require('../mockData/mockRoomData');

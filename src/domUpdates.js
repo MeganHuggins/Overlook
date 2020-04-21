@@ -3,7 +3,7 @@ import $ from 'jquery';
 import User from './Users';
 // import Manager from './Manager';
 // import Customer from './Customer';
-// import Room from './Room';
+import Room from './Room';
 import Hotel from './Hotel';
 import LoginHandler from './LoginHandler';
 
@@ -21,7 +21,7 @@ const domUpdates = {
     if (loginInfo.id === "manager") {
       domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData);
     } else {
-      domUpdates.loadCustomerPortal();
+      domUpdates.loadCustomerPortal(todaysDate, mockBookingData, mockRoomData);
     }
     domUpdates.hideLoginPage();
   },
@@ -38,10 +38,62 @@ const domUpdates = {
 
   },
 
-  loadCustomerPortal: () => {
-    let newUser = new User(user)
-    let userBookings = newUser.findUserBookings();
-    let totalBookingCosts = newUser.findTotalSpentOnRooms();
+  loadCustomerPortal: (todaysDate, mockBookingData, mockRoomData) => {
+    rooms = mockRoomData;
+    let newUser = new User(user);
+    let currentBookings = newUser.findUserCurrentBookings(todaysDate, mockBookingData);
+    let pastBookings = newUser.findPastBookings(todaysDate, mockBookingData);
+    let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, mockBookingData, mockRoomData);
+
+
+    $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay.`);
+
+    $('.filter-room-buttons').prepend(
+      `<img src="../images/calendar.png" alt="calendar">
+      <input min="${todaysDate.replace(/\//g, '-')}" required type="date" id="date-picker">`);
+
+    $('#rooms-section').prepend(
+      `${rooms.map(room =>
+        `<div class="room-card">
+          <h3>${room.roomType}</h3>
+          <div class="room-info">
+            <p>Room Number ${room.number}</p>
+            <p>Number of Beds: ${room.numBeds}</p>
+            <p>Bed Size: ${room.bedSize}</p>
+            <p>Bidet: ${room.hasBidet}</p>
+            <p>Cost Per Night: ${room.costPerNight}</p>
+          </div>
+          <button type="button" name="button">BOOK ROOM</button></button>
+        </div>`
+        ).join("")}`
+      );
+
+    $('#upcoming-bookings').html(
+    `<h2>Upcoming Bookings</h2>
+      <table class="booking-list">
+        ${currentBookings.length ? currentBookings.map(booking =>
+          `<tr>
+            <td>${booking.date}</td>
+            <td>Room ${booking.roomNumber}</td>
+          </tr>`).join("")
+          :
+          `<p>You currently have no upcoming bookings. Use the calendar to the right to start planning your next stay. </p>`
+        }
+      </table>`
+    );
+
+    $('#past-bookings').html(
+    `<h2>Past Bookings</h2>
+      <table class="booking-list">
+      ${pastBookings.map(booking =>
+      `<tr>
+        <td>${booking.date}</td>
+        <td>Room ${booking.roomNumber}</td>
+        </tr>`).join("")
+      }</table>`
+    );
+
+    $('#money-spent').prepend(`$${totalBookingCosts}`);
   },
 
   hideLoginPage: () => {

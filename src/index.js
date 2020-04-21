@@ -12,11 +12,9 @@ import './images/junior-suite.jpg';
 import './images/suite.jpg';
 import './images/presidential-suite.jpg';
 
-const mockUserData = require('../mockData/mockUserData');
-const mockRoomData = require('../mockData/mockRoomData');
-const mockBookingData = require('../mockData/mockBookingData');
-
-console.log('mockUserData', mockUserData, 'mockRoomData', mockRoomData, 'mockBookingData', mockBookingData);
+// const mockUserData = require('../mockData/mockUserData');
+// const mockRoomData = require('../mockData/mockRoomData');
+// const mockBookingData = require('../mockData/mockBookingData');
 
 // window.onload = function() {
 //   $('#manager-portal').hide();
@@ -24,48 +22,45 @@ console.log('mockUserData', mockUserData, 'mockRoomData', mockRoomData, 'mockBoo
 //   $('#login-page').show();
 // };
 
+let userData, roomData, bookingData;
+
+userData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
+  .then(data => data.json())
+  .then(data => data.users)
+  .catch(error => console.log(`There was an error obtaining userData ${error}`))
+
+roomData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
+  .then(data => data.json())
+  .then(data => data.rooms)
+  .catch(error => console.log(`There was an error obtaining roomData ${error}`))
+
+bookingData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
+  .then(data => data.json())
+  .then(data => data.bookings)
+  .catch(error => console.log(`There was an error obtaining bookingData ${error}`))
+
+Promise.all([userData, roomData, bookingData])
+  .then(data => {
+    userData = data[0];
+    roomData = data[1];
+    bookingData = data[2];
+  })
+  .catch(error => console.log(`There was an error obtaining all data ${error}`));
+
+console.log('userData', userData, 'roomData', roomData, 'bookingData', bookingData );
+
 $(".submit-btn").click(() => {
   getUserInfo(
     $(".username").val(),
     $(".pass-key").val(),
-    mockUserData
+    userData
   )
 });
 
 function getUserInfo(username, password) {
   let loginInfo = new LoginHandler();
-  console.log('loginInfo', loginInfo);
   if(loginInfo.checkCredientials(password)) {
-    // rooms = new Rooms();
-    // bookings = new bookings();
-    loginInfo.getUserData(username, mockUserData);
-    console.log('loginInfo2', loginInfo);
-    domUpdates.loadSite(loginInfo, mockBookingData, mockRoomData, mockUserData)
+    loginInfo.getUserData(username, userData);
+    domUpdates.loadSite(loginInfo, userData, roomData, bookingData)
   }
 };
-
-// const bookingData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
-//   .then(response => response.json())
-//   .then(data => data.bookingData)
-//   .catch(error => console.log(`There was an error obtaining bookingData ${error}`))
-//
-// const userData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
-//   .then(response => response.json())
-//   .then(data => data.userData)
-//   .catch(error => console.log(`There was an error obtaining userData ${error}`))
-//
-// const roomData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
-//   .then(response => response.json())
-//   .then(data => data.roomData)
-//   .catch(error => console.log(`There was an error obtaining roomData ${error}`))
-//
-// Promise.all([bookingData, userData, roomData])
-//   .then(data => {
-  //     const bookingInfo = data[0];
-  //     const usersInfo = data[1];
-  //     const roomsInfo = data[2];
-  //     // domUpdates.loadPage(users, sleep, activity, hydration);
-  //   })
-  //   .catch(error => console.log(`There was an error obtaining all data ${error}`))
-  //
-  //   console.log('bookingData', bookingData, 'userData', userData, 'roomData', roomData);

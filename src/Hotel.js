@@ -4,9 +4,9 @@ class Hotel {
     this.bookings = []
   }
 
-  sortHotelData(mockBookingData, mockRoomData) {
-    this.rooms = mockRoomData;
-    this.bookings = mockBookingData
+  sortHotelData(roomData, bookingData) {
+    this.rooms = roomData;
+    this.bookings = bookingData
     // console.log('this.rooms', this.rooms, 'this.bookings', this.bookings);
   }
 

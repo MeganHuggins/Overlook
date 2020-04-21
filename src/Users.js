@@ -4,24 +4,24 @@ class User {
     this.name = userInfo.name;
   }
 
-  getAllUserBookings(todaysDate, mockBookingData) {
-    return mockBookingData.filter(booking => booking.userID === this.id);
+  getAllUserBookings(todaysDate, bookingData) {
+    return bookingData.filter(booking => booking.userID === this.id);
   }
 
-  findUserCurrentBookings(todaysDate, mockBookingData) {
-    return this.getAllUserBookings(todaysDate, mockBookingData).filter(booking => booking.date >= todaysDate);
+  findUserCurrentBookings(todaysDate, bookingData) {
+    return this.getAllUserBookings(todaysDate, bookingData).filter(booking => booking.date >= todaysDate);
   }
 
-  findPastBookings(todaysDate, mockBookingData) {
-    return this.getAllUserBookings(todaysDate, mockBookingData).filter(booking => booking.date < todaysDate);
+  findPastBookings(todaysDate, bookingData) {
+    return this.getAllUserBookings(todaysDate, bookingData).filter(booking => booking.date < todaysDate);
   }
 
-  findTotalSpentOnRooms(todaysDate, mockBookingData, mockRoomData) {
-    let userBookings = this.getAllUserBookings(todaysDate, mockBookingData);
+  findTotalSpentOnRooms(todaysDate, roomData, bookingData) {
+    let userBookings = this.getAllUserBookings(todaysDate, bookingData);
     let totalCost = 0;
 
     userBookings.forEach(booking => {
-      mockRoomData.forEach(room => {
+      roomData.forEach(room => {
         if(booking.roomNumber === room.number) {
           return totalCost += room.costPerNight
         }

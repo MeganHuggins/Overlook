@@ -13,12 +13,12 @@
 
 ### Files modified:
 - [ ] index.html
-- [ ] styles.css
-- [ ] pantry.js
-- [ ] recipe.js
-- [ ] user.js
-- [ ] scripts.js
-- [ ] pantry-test.js
+- [ ] base.scss
+- [ ] index.js
+- [ ] domUpdates.js
+- [ ] loginHandler.js
+- [ ] Hotel.js
+- [ ] Users.js
 - [ ] recipe-test.js
 - [ ] user-test.js
 - [ ] Other files:

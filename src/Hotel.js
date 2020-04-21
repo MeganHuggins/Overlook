@@ -22,35 +22,22 @@ class Hotel {
 
   findAviableRooms(todaysDate) {
     let bookedRooms = this.findTodaysBookings(todaysDate);
-    return this.rooms.length - bookedRooms.length
+    console.log('bookedRooms', bookedRooms);
+    let availableRooms = [];
 
-    //
-    // for (let i = 0; i < this.rooms.length; i++) {
-    //   for (let j = 0; j < bookedRooms.length; i++ ) {
-    //     console.log('room', i, 'booked', j);
-    //     if(!availableRooms.includes(i) && j.roomNumber !== i.number) {
-    //       availableRooms.push(i);
-    //     }
-    //   }
-    // }
-    // bookedRooms.filter(bookedRoom => {
-    //   this.rooms.forEach(room => {
-    //     if(room.number !== bookedRoom.roomNumber) {
-    //       if(!availableRooms.includes(room)){
-    //         availableRooms.push(room)
-    //       }
-    //     }
-    //   })
-    // })
+    this.rooms.forEach(room => {
+      bookedRooms.forEach(booked => {
+        console.log(booked);
+        if(booked.roomNumber !== room.number) {
+          availableRooms.push(room);
+        }
+      })
+    });
 
-    // this.rooms.forEach(room => {
-    //   bookedRooms.forEach(bookedRoom => {
-    //     if(!availableRooms.includes(room) && bookedRoom.roomNumber !== room.number) {
-    //       availableRooms.push(room)
-    //     }
-    //   })
-    // });
-    // return availableRooms;
+    const available = new Set(availableRooms);
+
+    // 16 should come back
+    console.log('available', available);
   }
 
   totalRevenueForToday(todaysDate) {

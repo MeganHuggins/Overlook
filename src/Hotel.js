@@ -20,8 +20,9 @@ class Hotel {
     return bookedRooms;
   }
 
-  findAviableRooms(date) {
+  findAvailableRooms(date) {
     let bookedRoomNumbers = this.findTodaysBookings(date).map(booked => booked.roomNumber);
+    console.log('bookedRoomNumbers', bookedRoomNumbers);
 
     return this.rooms.filter(room => !bookedRoomNumbers.includes(room.number))
   }
@@ -48,8 +49,10 @@ class Hotel {
   percentageOfRoomsOccupied(todaysDate) {
     let bookedRooms = this.findTodaysBookings(todaysDate);
 
+
     return Math.floor(bookedRooms.length/ this.rooms.length * 100);
   }
+
 
 }
 

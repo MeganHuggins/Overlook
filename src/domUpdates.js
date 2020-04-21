@@ -10,6 +10,18 @@ import LoginHandler from './LoginHandler';
 let user, todaysDate;
 let hotel = new Hotel();
 
+$('.residential-suite-btn').click(() => {
+  domUpdates.filterRoomByType("residential")
+});
+$('.suite-btn').click(() => {
+  domUpdates.filterRoomByType("suite")
+});
+$('.junior-suite-btn').click(() => {
+  domUpdates.filterRoomByType("junior")
+});
+$('.single-room-btn').click(() => {
+  domUpdates.filterRoomByType("single")
+});
 
 const domUpdates = {
   loadSite: (loginInfo, userData, roomData, bookingData) => {
@@ -26,8 +38,8 @@ const domUpdates = {
 
   loadManagerPortal: (loginInfo, userData, roomData, bookingData) => {
     $('#customer-portal').hide();
-    let customers = mockUserData;
     hotel.sortHotelData(roomData, bookingData);
+    // let customers = userData;
     let aviableRooms = hotel.findAviableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
     let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
@@ -52,6 +64,7 @@ const domUpdates = {
   },
 
   loadCustomerPortal: (todaysDate, roomData, bookingData) => {
+    hotel.sortHotelData(roomData, bookingData);
     let rooms = roomData;
     let newUser = new User(user);
     let currentBookings = newUser.findUserCurrentBookings(todaysDate, bookingData);
@@ -67,7 +80,7 @@ const domUpdates = {
 
     $('#rooms-section').prepend(
       `${rooms.map(room =>
-        `<div class="room-card">
+        `<div class="room-card" data-room-type=${room.roomType}>
           <h3>${room.roomType}</h3>
           <div class="room-info">
             <p>Room Number ${room.number}</p>
@@ -109,7 +122,7 @@ const domUpdates = {
     $('#money-spent').prepend(`You have spent a total of $${totalBookingCosts} on bookings.`);
 
     $('#date-picker').change(function(){
-      const date = $('#date-picker').val().replace(/-/g, '/');
+      const chosenDate = $('#date-picker').val().replace(/-/g, '/');
       domUpdates.filterAvailableRoomsByDate(chosenDate);
     });
 
@@ -122,10 +135,24 @@ const domUpdates = {
   },
 
   filterAvailableRoomsByDate: (chosenDate) => {
+    let roomCards = Array.from(document.querySelectorAll('.room-card'));
     let avaiableRooms = hotel.findAviableRooms(chosenDate);
+    console.log('avaiableRooms', avaiableRooms);
+    console.log('roomCard', roomCards);
 
+  },
 
-  }
+  filterRoomByType: (roomType) => {
+    let roomCards = Array.from(document.querySelectorAll('.room-card'));
+    roomCards.forEach(card => {
+      const cardType = card.dataset.roomType;
+      if(roomType !== cardType) {
+        card.classList.add('hide')
+      } else {
+        card.classList.remove('hide')
+      }
+    });
+  },
 
 }
 

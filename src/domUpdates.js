@@ -17,21 +17,36 @@ const domUpdates = {
     todaysDate = Moment().format('YYYY/MM/DD');
 
     if (loginInfo.id === "manager") {
-      domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData);
+      domUpdates.loadManagerPortal(todaysDate, mockBookingData, mockRoomData, mockUserData);
     } else {
       domUpdates.loadCustomerPortal(todaysDate, mockBookingData, mockRoomData);
     }
     domUpdates.hideLoginPage();
   },
 
-  loadManagerPortal: (todaysDate, mockBookingData, mockRoomData) => {
+  loadManagerPortal: (todaysDate, mockBookingData, mockRoomData, mockUserData) => {
+    $('#customer-portal').hide();
+    let customers = mockUserData;
     hotel.sortHotelData(mockBookingData, mockRoomData);
     let aviableRooms = hotel.findAviableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
     let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
 
-    $('#available').prepend(`There are ${aviableRooms} room${aviableRooms > 1 ? "s" : ""} still available.`);
-    $('#occupied').prepend(`${percentageOccupied} percent of the rooms are occupied`)
+    // $('#guest-section').prepend(
+    //   `${customers.map(customer =>
+    //     `<div class="room-card">
+    //       <h3>${customer.name}</h3>
+    //       <div class="room-info">
+    //       </div>
+    //       <button type="button" name="button">BOOK ROOM</button></button>
+    //     </div>`
+    //     ).join("")}`
+    //   );
+
+    $('#available').prepend(`There are ${aviableRooms.length} room${aviableRooms.length > 1 ? "s" : ""} still available.`);
+
+    $('#occupied').prepend(`${percentageOccupied} percent of the rooms are occupied`);
+
     $('#revenue').prepend(`$${totalRevenue}`)
 
   },
@@ -44,7 +59,7 @@ const domUpdates = {
     let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, mockBookingData, mockRoomData);
 
 
-    $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay.`);
+    $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay`);
 
     $('.filter-room-buttons').prepend(
       `<img src="../images/calendar.png" alt="calendar">
@@ -91,19 +106,26 @@ const domUpdates = {
       }</table>`
     );
 
-    $('#money-spent').prepend(`$${totalBookingCosts}`);
+    $('#money-spent').prepend(`You have spent a total of $${totalBookingCosts} on bookings.`);
 
     $('#date-picker').change(function(){
       const date = $('#date-picker').val().replace(/-/g, '/');
-      hotel.findAviableRooms(date);
+      domUpdates.filterAvailableRoomsByDate(chosenDate);
     });
 
+    $('#manager-portal').hide();
   },
 
 
   hideLoginPage: () => {
     $('#login-page').hide();
   },
+
+  filterAvailableRoomsByDate: (chosenDate) => {
+    let avaiableRooms = hotel.findAviableRooms(chosenDate);
+
+
+  }
 
 }
 

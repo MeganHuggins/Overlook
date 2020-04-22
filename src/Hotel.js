@@ -7,7 +7,6 @@ class Hotel {
   sortHotelData(roomData, bookingData) {
     this.rooms = roomData;
     this.bookings = bookingData
-    // console.log('this.rooms', this.rooms, 'this.bookings', this.bookings);
   }
 
   findTodaysBookings(date) {
@@ -17,12 +16,12 @@ class Hotel {
           bookedRooms.push(booking)
         }
       });;
+      console.log('bookedRooms', bookedRooms);
     return bookedRooms;
   }
 
   findAvailableRooms(date) {
     let bookedRoomNumbers = this.findTodaysBookings(date).map(booked => booked.roomNumber);
-    console.log('bookedRoomNumbers', bookedRoomNumbers);
 
     return this.rooms.filter(room => !bookedRoomNumbers.includes(room.number))
   }
@@ -41,9 +40,11 @@ class Hotel {
       return soldRoom.costPerNight;
     });
 
-    return soldRoomPrices.reduce((acc, room) => {
+    let totalPrice = soldRoomPrices.reduce((acc, room) => {
       return acc += room
     }, 0);
+
+    return Math.round(totalPrice);
   }
 
   percentageOfRoomsOccupied(todaysDate) {

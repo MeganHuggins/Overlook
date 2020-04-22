@@ -12,17 +12,13 @@ import './images/junior-suite.jpg';
 import './images/suite.jpg';
 import './images/presidential-suite.jpg';
 
-// const mockUserData = require('../mockData/mockUserData');
-// const mockRoomData = require('../mockData/mockRoomData');
-// const mockBookingData = require('../mockData/mockBookingData');
-
-// window.onload = function() {
-//   $('#manager-portal').hide();
-//   $('#customer-portal').hide();
-//   $('#login-page').show();
-// };
-
 let userData, roomData, bookingData;
+
+$(document).ready(function() {
+  $('#login-page').show();
+  $('#manager-portal').hide();
+  $('#customer-portal').hide();
+})
 
 userData = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
   .then(data => data.json())
@@ -47,7 +43,6 @@ Promise.all([userData, roomData, bookingData])
   })
   .catch(error => console.log(`There was an error obtaining all data ${error}`));
 
-console.log('userData', userData, 'roomData', roomData, 'bookingData', bookingData );
 
 $(".submit-btn").click(() => {
   getUserInfo(

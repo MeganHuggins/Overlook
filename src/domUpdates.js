@@ -12,18 +12,18 @@ let hotel = new Hotel();
 
 
 //User Room Filter By Type Buttons
-$('.residential-suite-btn').click(() => {
-  domUpdates.filterRoomByType("residential")
-});
-$('.suite-btn').click(() => {
-  domUpdates.filterRoomByType("suite")
-});
-$('.junior-suite-btn').click(() => {
-  domUpdates.filterRoomByType("junior")
-});
-$('.single-room-btn').click(() => {
-  domUpdates.filterRoomByType("single")
-});
+// $('.residential-suite-btn').click(() => {
+//   domUpdates.filterRoomByType("residential")
+// });
+// $('.suite-btn').click(() => {
+//   domUpdates.filterRoomByType("suite")
+// });
+// $('.junior-suite-btn').click(() => {
+//   domUpdates.filterRoomByType("junior")
+// });
+// $('.single-room-btn').click(() => {
+//   domUpdates.filterRoomByType("single")
+// });
 
 
 const domUpdates = {
@@ -42,26 +42,21 @@ const domUpdates = {
   loadManagerPortal: (loginInfo, userData, roomData, bookingData) => {
     $('#customer-portal').hide();
     hotel.sortHotelData(roomData, bookingData);
-    let aviableRooms = hotel.findAviableRooms(todaysDate);
+    let availableRooms = hotel.findAvailableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
     let percentageOccupied = hotel.percentageOfRoomsOccupied(todaysDate);
+    domUpdates.createManagerPortalCards(userData, bookingData);
 
-    // $('#guest-section').prepend(
-    //   `${customers.map(customer =>
-    //     `<div class="room-card">
-    //       <h3>${customer.name}</h3>
-    //       <div class="room-info">
-    //       </div>
-    //       <button type="button" name="button">BOOK ROOM</button></button>
-    //     </div>`
-    //     ).join("")}`
-    //   );
-
-    $('#available').prepend(`There are ${aviableRooms.length} room${aviableRooms.length > 1 ? "s" : ""} still available.`);
+    $('#available').prepend(`There are ${availableRooms.length} room${availableRooms.length > 1 ? "s" : ""} still available.`);
 
     $('#occupied').prepend(`${percentageOccupied} percent of the rooms are occupied`);
 
-    $('#revenue').prepend(`$${totalRevenue}`)
+    $('#revenue').prepend(`$${totalRevenue}`);
+
+    $('.search-input').on('keyup', () => {
+      const input = $('.search-input').val().toLowerCase();
+      domUpdates.searchThroughUsers(input);
+    });
 
   },
 
@@ -71,7 +66,7 @@ const domUpdates = {
     let pastBookings = newUser.findPastBookings(todaysDate, bookingData);
     let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, roomData, bookingData);
     hotel.sortHotelData(roomData, bookingData);
-    domUpdates.createUserRoomCards(roomData);
+
 
     $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay`);
 
@@ -108,25 +103,27 @@ const domUpdates = {
 
     $('#date-picker').change(function(){
       chosenDate = $('#date-picker').val().replace(/-/g, '/');
-      console.log('chosenDate', chosenDate);
+      $('.room-card').remove();
       domUpdates.createUserRoomCards(roomData);
       $('.book-room-btn').click(() => {
         newUser.bookARoom(chosenDate);
       });
+
+      //User Room Filter By Type Buttons
+      $('.residential-suite-btn').click(() => {
+        domUpdates.filterRoomByType("residential")
+      });
+      $('.suite-btn').click(() => {
+        domUpdates.filterRoomByType("suite")
+      });
+      $('.junior-suite-btn').click(() => {
+        domUpdates.filterRoomByType("junior")
+      });
+      $('.single-room-btn').click(() => {
+        domUpdates.filterRoomByType("single")
+      });
+
       domUpdates.filterAvailableRoomsByDate(chosenDate);
-      // //User Room Filter By Type Buttons
-      // $('.residential-suite-btn').click(() => {
-      //   domUpdates.filterRoomByType("residential")
-      // });
-      // $('.suite-btn').click(() => {
-      //   domUpdates.filterRoomByType("suite")
-      // });
-      // $('.junior-suite-btn').click(() => {
-      //   domUpdates.filterRoomByType("junior")
-      // });
-      // $('.single-room-btn').click(() => {
-      //   domUpdates.filterRoomByType("single")
-      // });
     });
 
     $('#manager-portal').hide();
@@ -155,6 +152,23 @@ const domUpdates = {
     );
   },
 
+  createManagerPortalCards: (userData, bookingData) => {
+
+
+    $('#manager-guest-section').prepend(
+      `${userData.map(user =>
+        `<div class="room-card" data-user-ID="${user.id}" data-user-name="${user.name.toLowerCase()}">
+          <h3>${user.name}</h3>
+          <div class="room-info">
+            <p>Hi!!!!</p>
+          </div>
+          <button type="button" name="button">DELETE BOOKING</button></button>
+          <button type="button" name="button">BOOK NEW ROOM</button></button>
+        </div>`
+        ).join("")}`
+      );
+  },
+
   filterAvailableRoomsByDate: (chosenDate) => {
     let roomCards = Array.from(document.querySelectorAll('.room-card'));
     let availableRoomNumbers = hotel.findAvailableRooms(chosenDate).map(room => room.number);
@@ -171,10 +185,20 @@ const domUpdates = {
   },
 
   filterRoomByType: (roomType) => {
-    // grab the whole list of room cards
-    // go over them, and if they are already hidden, leave them hidden
-    // then hide the cards that don't match the room type
     $(".room-card").hide().filter(`[data-room-type="${roomType}"]`).show();
+  },
+
+  searchThroughUsers: (input) => {
+
+    $(".room-card").each(function(i, card) {
+      console.log('this', this);
+      let userName = card.dataset.userName;
+      if(!userName.includes(input)) {
+        $(this).addClass('hidden')
+      } else {
+        $(this).removeClass('hidden')
+      }
+    });
   },
 
 }

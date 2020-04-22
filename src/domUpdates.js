@@ -3,28 +3,11 @@ import $ from 'jquery';
 import User from './Users';
 // import Manager from './Manager';
 // import Customer from './Customer';
-import Room from './Room';
 import Hotel from './Hotel';
 import LoginHandler from './LoginHandler';
 
 let user, todaysDate, chosenDate, newUser;
 let hotel = new Hotel();
-
-
-//User Room Filter By Type Buttons
-// $('.residential-suite-btn').click(() => {
-//   domUpdates.filterRoomByType("residential")
-// });
-// $('.suite-btn').click(() => {
-//   domUpdates.filterRoomByType("suite")
-// });
-// $('.junior-suite-btn').click(() => {
-//   domUpdates.filterRoomByType("junior")
-// });
-// $('.single-room-btn').click(() => {
-//   domUpdates.filterRoomByType("single")
-// });
-
 
 const domUpdates = {
   loadSite: (loginInfo, userData, roomData, bookingData) => {
@@ -40,7 +23,6 @@ const domUpdates = {
   },
 
   loadManagerPortal: (loginInfo, userData, roomData, bookingData) => {
-    $('#customer-portal').hide();
     hotel.sortHotelData(roomData, bookingData);
     let availableRooms = hotel.findAvailableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
@@ -56,6 +38,8 @@ const domUpdates = {
     $('.search-input').on('keyup', () => {
       const input = $('.search-input').val().toLowerCase();
       domUpdates.searchThroughUsers(input);
+
+    $('#customer-portal').hide();
     });
 
   },
@@ -153,20 +137,36 @@ const domUpdates = {
   },
 
   createManagerPortalCards: (userData, bookingData) => {
-
+    let userBookings = hotel.findBookingsForEveryUser(todaysDate, userData)
 
     $('#manager-guest-section').prepend(
       `${userData.map(user =>
         `<div class="room-card" data-user-ID="${user.id}" data-user-name="${user.name.toLowerCase()}">
           <h3>${user.name}</h3>
           <div class="room-info">
-            <p>Hi!!!!</p>
+          <h2>Customer Bookings</h2>
+            <table class="booking-list">
+
+            </table>
           </div>
-          <button type="button" name="button">DELETE BOOKING</button></button>
-          <button type="button" name="button">BOOK NEW ROOM</button></button>
+          <button type="button" name="button">DELETE BOOKING</button>
+          <button type="button" name="button">BOOK A ROOM</button>
         </div>`
         ).join("")}`
       );
+  },
+
+  createTableCells: (bookings, userData) => {
+    return bookings.forEach(booking => {
+      userData.forEach(user => {
+        if(booking.userID === user.id) {
+          return `<tr>
+          <td>${booking.date}</td>
+          <td>Room ${booking.roomNumber}</td>
+          </tr>`;
+        }
+      })
+    })
   },
 
   filterAvailableRoomsByDate: (chosenDate) => {
@@ -189,7 +189,6 @@ const domUpdates = {
   },
 
   searchThroughUsers: (input) => {
-
     $(".room-card").each(function(i, card) {
       console.log('this', this);
       let userName = card.dataset.userName;

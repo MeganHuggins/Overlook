@@ -7,9 +7,11 @@ import Room from './Room';
 import Hotel from './Hotel';
 import LoginHandler from './LoginHandler';
 
-let user, todaysDate;
+let user, todaysDate, chosenDate, newUser;
 let hotel = new Hotel();
 
+
+//User Room Filter By Type Buttons
 $('.residential-suite-btn').click(() => {
   domUpdates.filterRoomByType("residential")
 });
@@ -22,6 +24,7 @@ $('.junior-suite-btn').click(() => {
 $('.single-room-btn').click(() => {
   domUpdates.filterRoomByType("single")
 });
+
 
 const domUpdates = {
   loadSite: (loginInfo, userData, roomData, bookingData) => {
@@ -63,12 +66,12 @@ const domUpdates = {
   },
 
   loadCustomerPortal: (todaysDate, roomData, bookingData) => {
-    let newUser = new User(user);
+    newUser = new User(user);
     let currentBookings = newUser.findUserCurrentBookings(todaysDate, bookingData);
     let pastBookings = newUser.findPastBookings(todaysDate, bookingData);
     let totalBookingCosts = newUser.findTotalSpentOnRooms(todaysDate, roomData, bookingData);
     hotel.sortHotelData(roomData, bookingData);
-    domUpdates.createUserRoomCards(roomData)
+    domUpdates.createUserRoomCards(roomData);
 
     $('#user-welcome-header').prepend(`Welcome back ${user.name}! Enjoy your stay`);
 
@@ -104,9 +107,26 @@ const domUpdates = {
     $('#money-spent').prepend(`You have spent a total of $${totalBookingCosts} on bookings.`);
 
     $('#date-picker').change(function(){
-      const chosenDate = $('#date-picker').val().replace(/-/g, '/');
+      chosenDate = $('#date-picker').val().replace(/-/g, '/');
+      console.log('chosenDate', chosenDate);
       domUpdates.createUserRoomCards(roomData);
+      $('.book-room-btn').click(() => {
+        newUser.bookARoom(chosenDate);
+      });
       domUpdates.filterAvailableRoomsByDate(chosenDate);
+      // //User Room Filter By Type Buttons
+      // $('.residential-suite-btn').click(() => {
+      //   domUpdates.filterRoomByType("residential")
+      // });
+      // $('.suite-btn').click(() => {
+      //   domUpdates.filterRoomByType("suite")
+      // });
+      // $('.junior-suite-btn').click(() => {
+      //   domUpdates.filterRoomByType("junior")
+      // });
+      // $('.single-room-btn').click(() => {
+      //   domUpdates.filterRoomByType("single")
+      // });
     });
 
     $('#manager-portal').hide();
@@ -129,7 +149,7 @@ const domUpdates = {
           <p>Bidet: ${room.hasBidet}</p>
           <p>Cost Per Night: ${room.costPerNight}</p>
         </div>
-        <button type="button" name="button">BOOK ROOM</button></button>
+        <button class="book-room-btn" type="button" name="button">BOOK ROOM</button></button>
       </div>`
       ).join("")}`
     );
@@ -151,6 +171,9 @@ const domUpdates = {
   },
 
   filterRoomByType: (roomType) => {
+    // grab the whole list of room cards
+    // go over them, and if they are already hidden, leave them hidden
+    // then hide the cards that don't match the room type
     $(".room-card").hide().filter(`[data-room-type="${roomType}"]`).show();
   },
 

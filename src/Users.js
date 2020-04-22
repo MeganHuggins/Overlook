@@ -30,9 +30,29 @@ class User {
     return Math.round(totalCost);
   }
 
-  // bookARoom() {
-  //
-  // }
+  bookARoom(chosenDate) {
+   let bookingId = parseInt(event.target.parentNode.dataset.roomNumber)
+    console.log('user', this.id, 'id', bookingId, 'bookingDate', typeof chosenDate);
+
+    fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "userID": this.id,
+        "date": chosenDate,
+        "roomNumber": bookingId,
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+
+    alert('Room has been Booked!')
+
+  }
+
 }
 
 export default User;

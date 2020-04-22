@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Overlook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <main id="login-page" src="">
+    <section class="login-form">
+      <header> Welcome To Die Fetch</header>
+      <h2>Login Form</h2>
+      <form class="login-info" action="#" method="">
+        <div class="field">
+          <span class=""></span>
+          <input class="username" type="text" required placeholder="Username">
+        </div>
+        <div class="field space">
+          <span class="fa fa-lock"></span>
+          <input type="password" class="pass-key" required placeholder="Password">
+          <!-- <span class="show">SHOW</span> -->
+        </div>
+        <div class="submit-button field">
+          <input class="submit-btn" type="submit" value="LOGIN">
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <main id="manager-portal">
+    <aside>
+      <section id="rooms-available" class="overview-card">
+        <h2 class="header">Rooms Available</h2>
+        <p id="available"></p>
+      </section>
+      <section id="rooms-occupied" class="overview-card">
+        <h2 class="card-header">Rooms Occupied</h2>
+        <p id="occupied"></p>
+      </section>
+      <section id="toadys-revenue" class="overview-card">
+        <h2 class="card-header">Today's Revenue</h2>
+        <p id="revenue"></p>
+      </section>
+    </aside>
+
+    <section id="main-portal">
+      <header>
+        <img src="../images/hotel-logo.png" alt="red star with many points">
+        <h1>Manager Portal</h1>
+      </header>
+      <section id="user-booking-page">
+        <form>
+          Username:<br>
+          <input type="text" name="username">
+          <br>
+          Email id:<br>
+          <input type="text" name="email_id">
+          <br><br>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+      <section id="delete-form">
+        <form>
+          Username:<br>
+          <input type="text" name="Customer Name">
+          <br>
+          Email id:<br>
+          <input type="text" name="">
+          <br><br>
+          <input type="submit" value="Date">
+        </form>
+      </section>
+      <section id="book-user-room">
+        <form>
+          Username:<br>
+          <input type="text" name="username">
+          <br>
+          Email id:<br>
+          <input type="text" name="email_id">
+          <br><br>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+      <section class="manager-user-section">
+        <div class="search-bar">
+          <button class="search-btn" type="button" name="button">
+            <img src="../images/search-icon.png" alt="magnify-glass">
+          </button>
+          <input class="search-input" type="text" name="" value="" placeholder="GUEST SEARCH">
+        </div>
+        <section id="manager-guest-section">
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <main id="customer-portal">
+    <aside>
+      <section id="upcoming-bookings" class="overview-card">
+      </section>
+      <section id="past-bookings" class="overview-card">
+      </section>
+      <section id="total-spent" class="overview-card">
+        <h2 class="card-header">Total Spent On Rooms</h2>
+        <p id="money-spent"></p>
+      </section>
+    </aside>
+
+    <section id="main-portal">
+      <header>
+        <img src="../images/hotel-logo.png" alt="red star with many points">
+        <h1 id="user-welcome-header"></h1>
+      </header>
+      <section class="book-room-section">
+        <div class="filter-room-buttons">
+          <button class="room-buttons residential-suite-btn" type="button" name="button">Residential Suite</button>
+          <button class="room-buttons suite-btn" type="button" name="button">Suite</button>
+          <button class="room-buttons junior-suite-btn" type="button" name="button">Junior Suite</button>
+          <button class="room-buttons single-room-btn" type="button" name="button">Single Room</button>
+        </div>
+        <section id="rooms-section">
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="main.bundle.js"></script></body>
+
+</html>

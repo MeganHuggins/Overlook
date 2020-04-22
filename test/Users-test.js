@@ -8,7 +8,6 @@ const mockUserData = require('../mockData/mockUserData.js');
 
 describe('User', () => {
   it('Should be a function', () => {
-    console.log(User);
     expect(User).to.be.a('function');
   });
 

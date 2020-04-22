@@ -53,6 +53,11 @@ class Hotel {
     return Math.floor(bookedRooms.length/ this.rooms.length * 100);
   }
 
+  findBookingsForEveryUser(todaysDate, userData) {
+    return userData.map(user => {
+      return this.bookings.filter(booking => booking.userID === user.id);
+    })
+  }
 
 }
 

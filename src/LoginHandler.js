@@ -14,7 +14,6 @@ class LoginHandler {
       this.userData = userData;
     } else if (username.substr(0, 8) === "customer") {
       this.id = parseInt(username.match(/(\d+)/g)[0]);
-      console.log('id', this.id);
       const currentUserData = userData.find(user => user.id === this.id);
       if (currentUserData) {
         this.userData = currentUserData;

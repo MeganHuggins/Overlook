@@ -23,6 +23,10 @@ const domUpdates = {
   },
 
   loadManagerPortal: (loginInfo, userData, roomData, bookingData) => {
+    $('#manager-portal').show();
+    $('#user-booking-page').hide();
+    $('#delete-form').hide();
+    $('#book-user-room').hide();
     hotel.sortHotelData(roomData, bookingData);
     let availableRooms = hotel.findAvailableRooms(todaysDate);
     let totalRevenue = hotel.totalRevenueForToday(todaysDate);
@@ -38,13 +42,21 @@ const domUpdates = {
     $('.search-input').on('keyup', () => {
       const input = $('.search-input').val().toLowerCase();
       domUpdates.searchThroughUsers(input);
-
-    $('#customer-portal').hide();
     });
 
+    $('.user-bookings').click(() => {
+      $('#user-booking-page').show();
+    })
+    $('.delete-booking').click(() => {
+      $('#delete-form').show();
+    })
+    $('.manager-booking').click(() => {
+      $('#book-user-room').show()
+    })
   },
 
   loadCustomerPortal: (todaysDate, roomData, bookingData) => {
+    $('#customer-portal').show();
     newUser = new User(user);
     let currentBookings = newUser.findUserCurrentBookings(todaysDate, bookingData);
     let pastBookings = newUser.findPastBookings(todaysDate, bookingData);
@@ -109,8 +121,6 @@ const domUpdates = {
 
       domUpdates.filterAvailableRoomsByDate(chosenDate);
     });
-
-    $('#manager-portal').hide();
   },
 
   hideLoginPage: () => {
@@ -143,14 +153,9 @@ const domUpdates = {
       `${userData.map(user =>
         `<div class="room-card" data-user-ID="${user.id}" data-user-name="${user.name.toLowerCase()}">
           <h3>${user.name}</h3>
-          <div class="room-info">
-          <h2>Customer Bookings</h2>
-            <table class="booking-list">
-
-            </table>
-          </div>
-          <button type="button" name="button">DELETE BOOKING</button>
-          <button type="button" name="button">BOOK A ROOM</button>
+          <button class="user-bookings" type="button" name="button">BOOKINGS</button>
+          <button class="delete-booking" type="button" name="button">DELETE BOOKING</button>
+          <button class="manager-booking" type="button" name="button">BOOK A ROOM</button>
         </div>`
         ).join("")}`
       );
@@ -190,7 +195,6 @@ const domUpdates = {
 
   searchThroughUsers: (input) => {
     $(".room-card").each(function(i, card) {
-      console.log('this', this);
       let userName = card.dataset.userName;
       if(!userName.includes(input)) {
         $(this).addClass('hidden')

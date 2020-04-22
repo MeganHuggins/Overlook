@@ -32,8 +32,7 @@ class User {
 
   bookARoom(chosenDate) {
    let bookingId = parseInt(event.target.parentNode.dataset.roomNumber)
-    console.log('user', this.id, 'id', bookingId, 'bookingDate', typeof chosenDate);
-
+   
     fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
       method: 'POST',
       headers: {
